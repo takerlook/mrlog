@@ -3,13 +3,9 @@ sudo: false
 
 matrix:
   include:
-    - go: 1.x
-    - go: 1.4
-    - go: 1.5
-    - go: 1.6
-    - go: 1.7
-    - go: 1.8
-    - go: 1.9
+    - go: 1.12
+    - go: 1.13
+    - go: 1.14
     - go: tip
 
 install:
@@ -18,7 +14,7 @@ install:
 script:
   - go get -t -v ./...
   - diff -u <(echo -n) <(gofmt -d .)
-  - go tool vet .
+  - go vet .
   - go test -v -race -coverprofile=coverage.txt -covermode=atomic
 
 after_success:
