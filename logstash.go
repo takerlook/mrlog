@@ -11,6 +11,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const defaultAsyncBufferSize = 8192
+
 // Hook represents a connection to a Logstash instance
 type Hook struct {
 	sync.RWMutex
@@ -91,7 +93,7 @@ func NewAsyncHookWithFieldsAndPrefix(protocol, address, appName string, alwaysSe
 	if err != nil {
 		return nil, err
 	}
-	hook.AsyncBufferSize = 8192
+	hook.AsyncBufferSize = defaultAsyncBufferSize
 	hook.makeAsync()
 
 	return hook, err
@@ -142,6 +144,8 @@ func NewFilterHookWithPrefix(prefix string) *Hook {
 // Logs will be sent asynchronously.
 func NewAsyncFilterHookWithPrefix(prefix string) *Hook {
 	hook := NewFilterHookWithPrefix(prefix)
+	hook.AsyncBufferSize = defaultAsyncBufferSize
+
 	hook.makeAsync()
 
 	return hook
