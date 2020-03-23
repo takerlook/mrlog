@@ -93,7 +93,6 @@ func NewAsyncHookWithFieldsAndPrefix(protocol, address, appName string, alwaysSe
 	if err != nil {
 		return nil, err
 	}
-	hook.AsyncBufferSize = defaultAsyncBufferSize
 	hook.makeAsync()
 
 	return hook, err
@@ -119,6 +118,7 @@ func NewHookWithFieldsAndConnAndPrefix(conn net.Conn, appName string, alwaysSent
 // Logs will be sent asynchronously.
 func NewAsyncHookWithFieldsAndConnAndPrefix(conn net.Conn, appName string, alwaysSentFields logrus.Fields, prefix string) (*Hook, error) {
 	hook := &Hook{conn: conn, appName: appName, alwaysSentFields: alwaysSentFields, hookOnlyPrefix: prefix}
+
 	hook.makeAsync()
 
 	return hook, nil
@@ -144,7 +144,6 @@ func NewFilterHookWithPrefix(prefix string) *Hook {
 // Logs will be sent asynchronously.
 func NewAsyncFilterHookWithPrefix(prefix string) *Hook {
 	hook := NewFilterHookWithPrefix(prefix)
-	hook.AsyncBufferSize = defaultAsyncBufferSize
 
 	hook.makeAsync()
 
@@ -152,6 +151,9 @@ func NewAsyncFilterHookWithPrefix(prefix string) *Hook {
 }
 
 func (h *Hook) makeAsync() {
+	if h.AsyncBufferSize == 0 {
+		h.AsyncBufferSize = defaultAsyncBufferSize
+	}
 	h.fireChannel = make(chan *logrus.Entry, h.AsyncBufferSize)
 
 	go func() {
