@@ -42,8 +42,6 @@ func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte
 		}
 	}
 
-	fields["@version"] = "1"
-
 	timeStampFormat := f.TimestampFormat
 
 	if timeStampFormat == "" {
