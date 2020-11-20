@@ -15,30 +15,6 @@ import (
 
 const defaultAsyncBufferSize = 8192
 
-// LogrusInit logrus settings
-// address = host:port
-func LogrusInit(address string, appname string, level logrus.Level) {
-	// file logging init
-	f, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
-	if err != nil {
-		logrus.Panic(err)
-	}
-	logrus.SetOutput(io.MultiWriter(os.Stderr, f))
-
-	// add logstash hook
-	hook, err := NewAsyncHook("tcp", address, appname)
-	if err != nil {
-		panic(err)
-	}
-	hook.ReconnectBaseDelay = time.Second
-	hook.ReconnectDelayMultiplier = 2
-	hook.MaxReconnectRetries = 10
-	logrus.AddHook(hook)
-
-	logrus.SetFormatter(&logrus.JSONFormatter{})
-	logrus.SetLevel(level)
-}
-
 // Hook represents a connection to a Logstash instance
 type Hook struct {
 	sync.RWMutex
@@ -59,14 +35,18 @@ type Hook struct {
 	MaxReconnectRetries      int           // Declares how many times we will try to reconnect.
 }
 
-// LogInit init
-func LogInit() {
-	l, err := os.OpenFile("logs/log.log", os.O_WRONLY|os.O_CREATE, 0755)
+// NewLogstash logrus settings
+// address = host:port
+func NewLogstash(address string, appname string, level logrus.Level) {
+	// file logging init
+	f, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
 	if err != nil {
 		logrus.Panic(err)
 	}
-	logrus.SetOutput(io.MultiWriter(os.Stderr, l))
-	hook, err := NewAsyncHook("tcp", "114.203.210.215:5000", "gateway")
+	logrus.SetOutput(io.MultiWriter(os.Stderr, f))
+
+	// add logstash hook
+	hook, err := NewAsyncHook("tcp", address, appname)
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +56,7 @@ func LogInit() {
 	logrus.AddHook(hook)
 
 	logrus.SetFormatter(&logrus.JSONFormatter{})
-	logrus.SetLevel(logrus.ErrorLevel)
+	logrus.SetLevel(level)
 }
 
 // NewHook creates a new hook to a Logstash instance, which listens on
