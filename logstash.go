@@ -18,7 +18,7 @@ const defaultAsyncBufferSize = 8192
 // LogrusInit logrus settings
 func LogrusInit(address string, appname string) {
 	// file logging init
-	l, err := os.OpenFile("logs/log.log", os.O_WRONLY|os.O_CREATE, 0755)
+	l, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
 	if err != nil {
 		logrus.Panic(err)
 	}
