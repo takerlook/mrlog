@@ -3,6 +3,7 @@ package logrustash
 import (
 	"fmt"
 	"io"
+	"log"
 	"math"
 	"net"
 	"os"
@@ -39,6 +40,13 @@ type Hook struct {
 // address = host:port
 func NewLogstash(address string, appname string, level logrus.Level) {
 	// file logging init
+	_, err := os.Stat("logs")
+	if os.IsNotExist(err) {
+		errDir := os.MkdirAll("logs", 0755)
+		if errDir != nil {
+			log.Fatal(err)
+		}
+	}
 	f, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
 	if err != nil {
 		logrus.Panic(err)
