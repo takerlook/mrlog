@@ -38,7 +38,7 @@ type Hook struct {
 
 // NewLogstash logrus settings
 // address = host:port
-func NewLogstash(address string, appname string, level logrus.Level) {
+func NewLogstash(address string, appid string, level logrus.Level, logname string) {
 	// file logging init
 	_, err := os.Stat("logs")
 	if os.IsNotExist(err) {
@@ -47,14 +47,14 @@ func NewLogstash(address string, appname string, level logrus.Level) {
 			log.Fatal(err)
 		}
 	}
-	f, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
+	f, err := os.OpenFile("logs/"+logname+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
 	if err != nil {
 		logrus.Panic(err)
 	}
 	logrus.SetOutput(io.MultiWriter(os.Stderr, f))
 
 	// add logstash hook
-	hook, err := NewAsyncHook("tcp", address, appname)
+	hook, err := NewAsyncHook("tcp", address, appid)
 	if err != nil {
 		panic(err)
 	}
