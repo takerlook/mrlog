@@ -1,3 +1,0 @@
-package: gitscm.cisco.com/ccdev/logtest
-import:
-- package: github.com/sirupsen/logrus

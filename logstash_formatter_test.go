@@ -10,8 +10,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func TestLogstashFormatter(t *testing.T) {
-	lf := LogstashFormatter{Type: "abc"}
+func TestLogFormat(t *testing.T) {
+	lf := LogFormat{Type: "abc"}
 
 	fields := logrus.Fields{
 		"message": "def",

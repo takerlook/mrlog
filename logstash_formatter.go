@@ -9,22 +9,22 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// LogstashFormatter generates json in logstash format.
+// LogFormat generates json in logstash format.
 // Logstash site: http://logstash.net/
-type LogstashFormatter struct {
-	Type string // if not empty use for logstash type field.
-
+type LogFormat struct {
+	// if not empty use for logstash type field.
+	Type string
 	// TimestampFormat sets the format used for timestamps.
 	TimestampFormat string
 }
 
 // Format formats log message.
-func (f *LogstashFormatter) Format(entry *logrus.Entry) ([]byte, error) {
+func (f *LogFormat) Format(entry *logrus.Entry) ([]byte, error) {
 	return f.FormatWithPrefix(entry, "")
 }
 
 // FormatWithPrefix removes prefix from keys and formats log message.
-func (f *LogstashFormatter) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte, error) {
+func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte, error) {
 	fields := make(logrus.Fields)
 	for k, v := range entry.Data {
 		// Remove the prefix when sending the fields to logstash
