@@ -72,7 +72,7 @@ func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte
 		if ok {
 			fields["fields.type"] = v
 		}
-		fields["type"] = f.Type
+		fields["appid"] = f.Type
 	}
 
 	serialized, err := json.Marshal(fields)
