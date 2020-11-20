@@ -7,16 +7,34 @@
 Use this hook to send the logs to [Logstash](https://www.elastic.co/products/logstash) over both UDP and TCP.
 
 # Important notes
+아래 repo를 참고하여 수정하였습니다.
 
-This a patched version of *old* [github.com/bshuster-repo/logrus-logstash-hook](https://github.com/bshuster-repo/logrus-logstash-hook.git) repo.
+[github.com/bshuster-repo/logrus-logstash-hook](https://github.com/bshuster-repo/logrus-logstash-hook.git)
+& 
+[https://github.com/cheshir/logrustash](https://github.com/cheshir/logrustash) repo.
 
-Added features:
 
-* [Async mode](#async-mode). You can send log messages without blocking logic.
-* [Reconnect](#reconnect).
 
-*!* Currently there is no sense to use it. You can get the same behaviour with newest version of package and "smart" TCP connection that will provide reconnects and async behaviour.
+logstash hook init
+```go
+package main
 
+import (
+	"github.com/n0ch4t/logrustash"
+	"github.com/sirupsen/logrus"
+)
+
+func main() {
+	logrustash.NewLogstash("127.0.0.1:5000", "APP ID", logrus.InfoLevel)
+
+	logrus.WithFields(logrus.Fields{
+		"method": "main",
+		"uid":    "username",
+	}).Info("Hello World!")
+```
+
+
+# - original - 
 ## Usage
 
 ```go
