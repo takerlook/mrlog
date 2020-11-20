@@ -16,13 +16,15 @@ import (
 const defaultAsyncBufferSize = 8192
 
 // LogrusInit logrus settings
-func LogrusInit(address string, appname string) {
+// address = host:port
+func LogrusInit(address string, appname string, level logrus.Level) {
 	// file logging init
-	l, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
+	f, err := os.OpenFile("logs/log.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
 	if err != nil {
 		logrus.Panic(err)
 	}
-	logrus.SetOutput(io.MultiWriter(os.Stderr, l))
+	logrus.SetOutput(io.MultiWriter(os.Stderr, f))
+
 	// add logstash hook
 	hook, err := NewAsyncHook("tcp", address, appname)
 	if err != nil {
@@ -34,7 +36,7 @@ func LogrusInit(address string, appname string) {
 	logrus.AddHook(hook)
 
 	logrus.SetFormatter(&logrus.JSONFormatter{})
-	logrus.SetLevel(logrus.ErrorLevel)
+	logrus.SetLevel(level)
 }
 
 // Hook represents a connection to a Logstash instance
