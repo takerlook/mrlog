@@ -45,7 +45,7 @@ func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte
 	timeStampFormat := f.TimestampFormat
 
 	if timeStampFormat == "" {
-		timeStampFormat = time.RFC3339
+		timeStampFormat = time.RFC3339Nano
 	}
 
 	fields["@timestamp"] = entry.Time.Format(timeStampFormat)

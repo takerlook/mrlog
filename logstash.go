@@ -63,7 +63,9 @@ func NewLogstash(address string, appid string, level logrus.Level, logname strin
 	hook.MaxReconnectRetries = 10
 	logrus.AddHook(hook)
 
-	logrus.SetFormatter(&logrus.JSONFormatter{})
+	logrus.SetFormatter(&logrus.JSONFormatter{
+		TimestampFormat: time.RFC3339Nano,
+	})
 	logrus.SetLevel(level)
 }
 
