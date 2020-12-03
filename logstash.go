@@ -1,4 +1,4 @@
-package logrustash
+package mrlog
 
 import (
 	"fmt"
