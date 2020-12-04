@@ -55,6 +55,10 @@ func Fatal(c echo.Context, args ...interface{}) {
 	getField(c).Fatal(args...)
 }
 
+func WithFields(c echo.Context, field logrus.Fields) *logrus.Entry {
+	return getField(c).WithFields(field)
+}
+
 func getField(c echo.Context) *logrus.Entry {
 	defaultFields := c.Get(DEFAULTFIELD)
 	if defaultFields != nil {
