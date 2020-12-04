@@ -1,4 +1,4 @@
-module mrlog
+module github.com/n0ch4t/mrlog
 
 go 1.15
 
