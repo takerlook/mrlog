@@ -10,17 +10,18 @@ import (
 )
 
 const (
-	APIIP      = "host"
-	APPID      = "appid"
-	LEVEL      = "level"
-	TRACEID    = "traceid"
-	UIP        = "userip"
-	UID        = "userid"
-	CLIENTID   = "clientid"
-	METHOD     = "method"
-	PATH       = "path"
-	HEADER     = "header"
-	SESSIONKEY = "sessionkey"
+	APIIP        = "host"
+	APPID        = "appid"
+	LEVEL        = "level"
+	TRACEID      = "traceid"
+	UIP          = "userip"
+	UID          = "userid"
+	CLIENTID     = "clientid"
+	METHOD       = "method"
+	PATH         = "path"
+	HEADER       = "header"
+	SESSIONKEY   = "sessionkey"
+	DEFAULTFIELD = "defaultField"
 )
 
 // LogFormat generates json in logstash format.
