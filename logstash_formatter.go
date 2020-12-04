@@ -9,8 +9,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const (
+	APIIP      = "host"
+	APPID      = "appid"
+	LEVEL      = "level"
+	TRACEID    = "traceid"
+	UIP        = "userip"
+	UID        = "userid"
+	CLIENTID   = "clientid"
+	METHOD     = "method"
+	PATH       = "path"
+	HEADER     = "header"
+	SESSIONKEY = "sessionkey"
+)
+
 // LogFormat generates json in logstash format.
-// Logstash site: http://logstash.net/
 type LogFormat struct {
 	// if not empty use for logstash type field.
 	Type string
@@ -27,15 +40,12 @@ func (f *LogFormat) Format(entry *logrus.Entry) ([]byte, error) {
 func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte, error) {
 	fields := make(logrus.Fields)
 	for k, v := range entry.Data {
-		// Remove the prefix when sending the fields to logstash
 		if prefix != "" && strings.HasPrefix(k, prefix) {
 			k = strings.TrimPrefix(k, prefix)
 		}
 
 		switch v := v.(type) {
 		case error:
-			// Otherwise errors are ignored by `encoding/json`
-			// https://github.com/Sirupsen/logrus/issues/377
 			fields[k] = v.Error()
 		default:
 			fields[k] = v
@@ -70,7 +80,7 @@ func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte
 		if ok {
 			fields["fields.type"] = v
 		}
-		fields["api_id"] = f.Type
+		fields["appid"] = f.Type
 	}
 
 	serialized, err := json.Marshal(fields)

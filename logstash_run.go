@@ -64,11 +64,11 @@ func getField(c echo.Context) *logrus.Entry {
 	header := c.Request().Header
 
 	return logrus.WithFields(logrus.Fields{
-		"path":     c.Path(),
-		"clientid": header.Get("clientid"),
-		"uid":      header.Get("uid"),
-		"uip":      header.Get("uip"),
-		"traceid":  header.Get("traceid"),
-		"method":   c.Request().Method,
+		PATH:     c.Path(),
+		CLIENTID: header.Get("clientid"),
+		UID:      header.Get("uid"),
+		UIP:      header.Get("uip"),
+		TRACEID:  header.Get("traceid"),
+		METHOD:   c.Request().Method,
 	})
 }
