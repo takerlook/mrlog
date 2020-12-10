@@ -38,7 +38,7 @@ type Hook struct {
 
 // NewLogstash logrus settings
 // address = host:port
-func NewLogstash(address string, appid string, level logrus.Level, logname string) {
+func NewLogstash(address string, appid string, level string, logname string) {
 	// file logging init
 	_, err := os.Stat("logs")
 	if os.IsNotExist(err) {
@@ -66,7 +66,27 @@ func NewLogstash(address string, appid string, level logrus.Level, logname strin
 	logrus.SetFormatter(&logrus.JSONFormatter{
 		TimestampFormat: time.RFC3339Nano,
 	})
-	logrus.SetLevel(level)
+	logrus.SetLevel(getLevel(level))
+}
+
+func getLevel(level string) logrus.Level {
+	l := strings.ToLower(level)
+	switch l {
+	case "fatal":
+		return logrus.FatalLevel
+	case "error":
+		return logrus.ErrorLevel
+	case "warn":
+		return logrus.WarnLevel
+	case "info":
+		return logrus.InfoLevel
+	case "debug":
+		return logrus.DebugLevel
+	case "trace":
+		return logrus.TraceLevel
+	default:
+		return logrus.InfoLevel
+	}
 }
 
 // NewHook creates a new hook to a Logstash instance, which listens on
