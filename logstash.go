@@ -56,12 +56,13 @@ func NewLogstash(address string, appid string, level string, logname string) {
 	// add logstash hook
 	hook, err := NewAsyncHook("tcp", address, appid)
 	if err != nil {
-		panic(err)
+		logrus.Error(err)
+	} else {
+		hook.ReconnectBaseDelay = time.Second
+		hook.ReconnectDelayMultiplier = 2
+		hook.MaxReconnectRetries = 10
+		logrus.AddHook(hook)
 	}
-	hook.ReconnectBaseDelay = time.Second
-	hook.ReconnectDelayMultiplier = 2
-	hook.MaxReconnectRetries = 10
-	logrus.AddHook(hook)
 
 	logrus.SetFormatter(&logrus.JSONFormatter{
 		TimestampFormat: time.RFC3339Nano,

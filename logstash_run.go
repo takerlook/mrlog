@@ -55,6 +55,7 @@ func Fatal(c echo.Context, args ...interface{}) {
 	getField(c).Fatal(args...)
 }
 
+// WithFields 필드 추가
 func WithFields(c echo.Context, field logrus.Fields) *logrus.Entry {
 	return getField(c).WithFields(field)
 }
