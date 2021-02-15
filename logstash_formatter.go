@@ -10,17 +10,29 @@ import (
 )
 
 const (
-	APIIP        = "host"
-	APPID        = "appid"
-	LEVEL        = "level"
-	TRACEID      = "traceid"
-	UIP          = "uip"
-	UID          = "uid"
-	CLIENTID     = "clientid"
-	METHOD       = "method"
-	PATH         = "path"
-	HEADER       = "header"
-	SESSIONKEY   = "sessionkey"
+	// APIIP 로그를 전송하는 API의 IP
+	APIIP = "host"
+	// APPID 로그를 보내는 APP의 ID
+	APPID = "appid"
+	// LEVEL 로그 레벨
+	LEVEL = "level"
+	// TRACEID 로그 추적 ID
+	TRACEID = "traceid"
+	// UIP API를 사용한 USER IP
+	UIP = "uip"
+	// UID API를 사용한 USER ID
+	UID = "uid"
+	// CLIENTID 유저가 사용하는 Cliend id
+	CLIENTID = "clientid"
+	// METHOD 요청 들어온 Method
+	METHOD = "method"
+	// PATH 요청 들어온 Path
+	PATH = "path"
+	// HEADER Request의 Header
+	HEADER = "header"
+	// SESSIONKEY 세션 키
+	SESSIONKEY = "sessionkey"
+	// DEFAULTFIELD 기본 필드
 	DEFAULTFIELD = "defaultField"
 )
 
