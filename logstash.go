@@ -54,14 +54,16 @@ func NewLogstash(address string, appid string, level string, logname string) {
 	logrus.SetOutput(io.MultiWriter(os.Stderr, f))
 
 	// add logstash hook
-	hook, err := NewAsyncHook("tcp", address, appid)
-	if err != nil {
-		logrus.Error(err)
-	} else {
-		hook.ReconnectBaseDelay = time.Second
-		hook.ReconnectDelayMultiplier = 2
-		hook.MaxReconnectRetries = 10
-		logrus.AddHook(hook)
+	if len(address) > 0 {
+		hook, err := NewAsyncHook("tcp", address, appid)
+		if err != nil {
+			logrus.Error(err)
+		} else {
+			hook.ReconnectBaseDelay = time.Second
+			hook.ReconnectDelayMultiplier = 2
+			hook.MaxReconnectRetries = 10
+			logrus.AddHook(hook)
+		}
 	}
 
 	logrus.SetFormatter(&logrus.JSONFormatter{
