@@ -5,9 +5,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+//Tracen Trace level with only default field
+func Tracen(args ...interface{}) {
+	logrus.Trace(args...)
+}
+
 //Debugn debug level with only default field
 func Debugn(args ...interface{}) {
-	logrus.Info(args...)
+	logrus.Debug(args...)
 }
 
 //Infon info level with only default field
@@ -28,6 +33,11 @@ func Errorn(args ...interface{}) {
 //Fataln fatal level with only default field
 func Fataln(args ...interface{}) {
 	logrus.Fatal(args...)
+}
+
+//Trace Trace level with custom field
+func Trace(c echo.Context, args ...interface{}) {
+	getField(c).Trace(args...)
 }
 
 //Debug debug level with custom field
