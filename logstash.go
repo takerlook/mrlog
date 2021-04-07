@@ -64,6 +64,8 @@ func NewLogstash(address string, appid string, level string, logname string) {
 			hook.MaxReconnectRetries = 10
 			logrus.AddHook(hook)
 		}
+	} else {
+		logrus.Debug("logstash not connected")
 	}
 
 	logrus.SetFormatter(&logrus.JSONFormatter{
