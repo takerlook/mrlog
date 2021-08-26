@@ -72,6 +72,7 @@ func (f *LogFormat) FormatWithPrefix(entry *logrus.Entry, prefix string) ([]byte
 	}
 
 	fields["@timestamp"] = entry.Time.Format(timeStampFormat)
+	fields["nano_sec"] = entry.Time.Format(time.RFC3339Nano)
 
 	// set message field
 	v, ok := entry.Data["message"]
